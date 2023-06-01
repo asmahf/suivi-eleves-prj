@@ -62,20 +62,20 @@
 
 <body>
     <?php include '../header/header.php'; ?>
-    <?php include '../admin/sidebar.php'; ?>
+    <?php include './sidebar.php'; ?>
     <main>
 
         <div class="container">
             <div class="icon-container">
-                <a href="../admin/recupub.php">
-                    <img src="publication.png" />
+                <a href="./recupub.php">
+                    <img src="./pic/publication.png" />
                     <p>Publication</p>
                 </a>
             </div>
 
             <div class="icon-container">
-                <a href="../admin/recup-emploi.php">
-                    <img src="emplois.png">
+                <a href="./recup-emploi.php">
+                    <img src="./pic/emplois.png">
                     <p>Emplois de temps</p>
                 </a>
 
