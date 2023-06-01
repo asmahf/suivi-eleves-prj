@@ -1,0 +1,92 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f4f8;
+    /* background-color: gainsboro; */
+    font-size: 1rem;
+    line-height: 1.5;
+    font-family: "Cabin", Sans-Serif;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.container {
+    max-width: 900px;
+    background-color: white;
+    border-radius: 0.25rem;
+    padding: 3.6rem 1.5rem 3.6rem;
+    border-top: 5px solid #3b82f6;
+
+    /* justify-content: center; */
+}
+
+input {
+    width: 100%;
+
+    padding: 0.4rem 0.2rem;
+    margin-top: 0.4rem;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #f0f4f8;
+    background-color: #f0f4f8;
+}
+
+button {
+    /* width: 100%; */
+
+    padding: 0.6rem 0.5rem;
+    margin-top: 1rem;
+    font-size: large;
+    font-weight: 500;
+    background-color: #3b82f6;
+    color: white;
+    cursor: pointer;
+    border: transparent;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #1967e4;
+}
+
+form {
+    display: grid;
+    gap: 1.3rem;
+    max-width: 346px;
+}
+
+form p {
+    text-align: center;
+}
+
+a,
+a:visited {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1967e4;
+}
+
+#code-enfant-list {
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
