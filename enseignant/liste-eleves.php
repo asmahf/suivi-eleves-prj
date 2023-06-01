@@ -49,7 +49,7 @@ require '../config/database.php';
                                 </select>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" name="showlist" class="btn btn-primary btn-sm">Afficher la liste des élèves</button>
+                            <button type="submit" name="showlist" class="btn btn-primary">Afficher la liste des élèves</button>
                         </div>
 
                     </div>

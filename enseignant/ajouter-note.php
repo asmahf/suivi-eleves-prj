@@ -31,41 +31,71 @@ require '../config/database.php';
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header">
-                            <h4> Ajouter des notes
-                                <a href="index.php" class="btn btn-danger float-end">Retour</a>
+                            <h4> Ajouter des notes<a href="index.php" class="btn btn-danger float-end">Retour</a>
                             </h4>
                         </div>
                         <div class="card-body">
-                            <div class="mb-3">
-                                <form method="GET" action="ajouter-note.php">
-                                    <label for="classe">Choisir une classe :</label>
-                                    <select name="classe" id="classe">
+                            <form method="GET" action="ajouter-note.php">
+                                <?php
+                                $con = new mysqli('localhost', 'Asma', '232300', 'suivieleve');
+                                $id_enseignant = $_SESSION['user']->id_utilis;
+                                $sql = "SELECT c.nom_classe FROM classe c LEFT JOIN enseigner e ON c.nom_classe = e.nom_classe WHERE e.id_enseignant = ?";
+                                $stmt = mysqli_prepare($con, $sql);
+                                mysqli_stmt_bind_param($stmt, 'i', $id_enseignant);
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
+                                $no_class = true;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    if ($row['nom_classe'][0] != "1" && $row['nom_classe'][0] != "2") {
+                                        if ($no_class) {
+                                            echo '<div class="mb-3">';
+                                            echo ' <label for="classe">Choisir une classe :</label>';
+                                            echo ' <select name="classe" id="classe" class="form-select w-25 my-1">';
+                                        }
+                                        $no_class = false;
+                                ?>
+                                        <option value="<?= $row['nom_classe']; ?>"><?= $row['nom_classe']; ?></option>
+                                <?php
+                                    }
+                                }
 
-                                        <option value="3AP1">3AP1</option>
-                                        <option value="3AP2">3AP2</option>
-                                        <option value="3AP3">3AP3</option>
-                                        <option value="4AP1">4AP1</option>
-                                        <option value="4AP2">4AP2</option>
-                                        <option value="4AP3">4AP3</option>
-                                        <option value="5AP1">5AP1</option>
-                                        <option value="5AP2">5AP2</option>
-                                        <option value="5AP3">5AP3</option>
-                                    </select>
-                            </div>
-                            <div class="mb-3">
-                                <form method="GET" action="ajouter-note.php">
-                                    <label for="matiere">Choisir une matiere :</label>
-                                    <select name="matiere" id="matiere">
+                                if ($no_class) {
+                                    echo '<h3 class="text-secondary">Vous n’êtes pas concernées par cette option</h3>';
+                                    echo '</form></div></div></div></div> </div></main></div></body></html>';
+                                    die;
+                                } else {
+                                    echo '</select>';
+                                    echo '</div>';
+                                }
+                                ?>
 
-                                        <option value="Langue arabe">Langue Arabe</option>
-                                        <option value="Mathématiques">Mathématiques</option>
-                                        <option value="Langue française">Langue française</option>
-                                        <option value="Langue anglaise">Langue anglaise</option>
-                                    </select>
-                            </div>
-                            <div class="mb-3">
-                                <button type="submit" name="showlist" class="btn btn-primary btn-sm">Afficher la liste des élèves</button>
-                            </div>
+
+                                <div class="mb-3">
+                                    <form method="GET" action="ajouter-note.php">
+                                        <label for="matiere">Choisir une matiere :</label>
+                                        <select name="matiere" id="matiere" class="form-select w-25">
+                                            <?php
+                                            $matiere_essentiel_list = array("Langue Arabe", "Mathématiques", "Langue française", "Langue anglaise");
+                                            // $con = new mysqli('localhost', 'Asma', '232300', 'suivieleve');
+                                            // $id_enseignant = $_SESSION['user']->id_utilis; 
+                                            $sql = "SELECT m.nom_matiere FROM matiere m LEFT JOIN enseigner_matiere e ON m.nom_matiere = e.nom_matiere WHERE e.id_enseignant = ?";
+                                            $stmt = mysqli_prepare($con, $sql);
+                                            mysqli_stmt_bind_param($stmt, 'i', $id_enseignant);
+                                            mysqli_stmt_execute($stmt);
+                                            $result = mysqli_stmt_get_result($stmt);
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                if (in_array($row['nom_matiere'], $matiere_essentiel_list)) {
+                                            ?>
+                                                    <option value="<?= $row['nom_matiere']; ?>"><?= $row['nom_matiere']; ?></option>
+                                            <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" name="showlist" class="btn btn-primary ">Afficher la liste des élèves</button>
+                                </div>
                             </form>
 
                         </div>
@@ -209,6 +239,7 @@ require '../config/database.php';
             }
 
             ?>
+        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
