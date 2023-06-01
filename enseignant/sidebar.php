@@ -55,15 +55,14 @@
 
             <nav>
                 <ul class="sidenav__list">
-                    <li class="sidenav__list-item"><a href="./acceuil.php" class="sidebar-link"> Acceuil</a></li>
+                    <li class="sidenav__list-item"><a href="./acceuil.php" class="sidebar-link">Acceuil</a></li>
 
                     <li class="sidenav__list-item"><a href="./liste-eleves.php" class="sidebar-link"><!--<i class="fas fa-users"></i> --> Liste des élèves</a></li>
                     <li class="sidenav__list-item"><a href="./evaluation.php" class="sidebar-link">Evaluer eleve 15jrs</a></li>
                     <li class="sidenav__list-item"><a href="./devoir.php" class="sidebar-link">Ajouter devoir</a></li>
                     <li class="sidenav__list-item"><a href="./ajouter-note.php" class="sidebar-link">Ajouter note</a></li>
                     <li class="sidenav__list-item"><a href="./remarque.php" class="sidebar-link">Envoyer remarque</a></li>
-                    <li class="sidenav__list-item"><a href="./message-urgence.php" class="sidebar-link">Envoyer message
-                            urgence</a></li>
+                    <li class="sidenav__list-item"><a href="./message-urgence.php" class="sidebar-link">Envoyer message urgence</a></li>
                 </ul>
             </nav>
 

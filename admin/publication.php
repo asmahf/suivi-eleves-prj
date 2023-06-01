@@ -85,14 +85,14 @@ require '../config/database.php';
 
             if ($result->num_rows > 0) {
                 $hr = 0;
-                echo "<div class=' py-3 '>";
+                echo "<div class='py-4'>";
 
                 while ($row = $result->fetch_assoc()) {
                     $idPublication = $row["id_pub"];
                     $typePublication = $row["type_pub"];
                     $contenuPublication = $row["contenu_pub"];
                     if ($hr != 0) {
-                        echo "<hr class='border border-1 opacity-100'>";
+                        echo "<hr class='border border-1 opacity-100 my-4'>";
                     }
 
                     echo "<div class='container px-4'>";

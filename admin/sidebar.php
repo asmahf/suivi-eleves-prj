@@ -59,7 +59,7 @@
 
             <nav>
                 <ul class="sidenav__list">
-                    <li><a href="../../../suivi-eleves-prj/admin/acceuil.php"><i class="fa-sharp fa-solid fa-house"></i> Acceuil</a></li>
+                    <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/acceuil.php">Acceuil</a></li>
 
                     <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/eleve/index.php" class="sidebar-link">Eleves</a></li>
                     <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/teacher/teacher.php" class="sidebar-link">Enseignants</a></li>
