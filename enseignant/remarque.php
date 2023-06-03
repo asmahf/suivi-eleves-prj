@@ -38,7 +38,7 @@ require '../config/database.php';
                             <div class="mb-3">
                                 <form method="GET" action="remarque.php">
                                     <label for="classe">Choisir une classe :</label>
-                                    <select name="classe" id="classe">
+                                    <select name="classe" id="classe" class="form-select w-25">
                                         <?php
                                         $con = new mysqli('localhost', 'Asma', '232300', 'suivieleve');
                                         $id_enseignant = $_SESSION['user']->id_utilis;
@@ -58,7 +58,7 @@ require '../config/database.php';
                                     </select>
                             </div>
                             <div class="mb-4">
-                                <button type="submit" name="showlist" class="btn btn-primary btn-sm">Afficher la liste des élèves</button>
+                                <button type="submit" name="showlist" class="btn btn-primary btn">Afficher la liste des élèves</button>
                             </div>
                             <?php
 
@@ -80,14 +80,14 @@ require '../config/database.php';
 
                                 echo '<form method="GET" action="remarque.php">';
                                 echo '  <label for="classe">Choisir un eleve :</label>';
-                                echo "<select name='id_eleve'>";
+                                echo "<select name='id_eleve' id='id_eleve' class='form-select w-25'>";
                                 while (mysqli_stmt_fetch($stmt)) {
                                     echo "<option value='" . $id_eleve . "'>" . $nom_eleve . " " . $prenom_eleve . "</option>";
                                 }
                                 echo '</select>';
                                 echo '</div>';
                                 echo ' <div class="mb-3">';
-                                echo '<button type="submit" name="remarque" class="btn btn-primary btn-sm">Ecrire remarque</button>';
+                                echo '<button type="submit" name="remarque" class="btn btn-primary btn">Ecrire remarque</button>';
                                 echo '</div>';
                                 echo ' </form>';
                             }

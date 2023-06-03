@@ -39,16 +39,16 @@ require '../config/database.php';
                     <form action="ajouter-emploi-temps.php" method="POST" enctype="multipart/form-data">
 
                         <div class="mb-3">
-                            <label for="name" class="form-label">Nom emploi :</label>
-                            <input type="text" name="nom_emploi" class="form-control" required>
+                            <label for="nom_emploi" class="form-label">Nom emploi :</label>
+                            <input type="text" name="nom_emploi" id="nom_emploi" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description :</label>
-                            <textarea name="description" class="form-control"></textarea>
+                            <textarea name="description" id="description" class="form-control"></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="pdf formFile" class="form-label">Fichier PDF :</label>
-                            <input class="form-control" type="file" name="pdf" accept="application/pdf">
+                            <label for="pdf" class="form-label">Fichier PDF :</label>
+                            <input class="form-control" type="file" name="pdf" id="pdf" accept="application/pdf">
                         </div>
                         <div class="mb-3">
                             <input type="hidden" name="type_pub" value="emplois_du_temps">

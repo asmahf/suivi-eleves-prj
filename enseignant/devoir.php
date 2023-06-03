@@ -49,7 +49,7 @@ require '../config/database.php';
                         </div>
                 </div>
                 <div class=" mb-3">
-                    <label for="floatingTextarea">Contenu du devoir :</label>
+                    <label for="contenu_devoir">Contenu du devoir :</label>
                     <textarea class="form-control" id="contenu_devoir" name="contenu_devoir"></textarea>
                 </div>
             </div>

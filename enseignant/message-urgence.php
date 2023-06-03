@@ -55,7 +55,7 @@ require '../config/database.php';
                                     </select>
                             </div>
                             <div class="mb-3">
-                                <button type="submit" name="showlist" class="btn btn-primary btn-sm">Afficher la liste des parents</button>
+                                <button type="submit" name="showlist" class="btn btn-primary btn">Afficher la liste des parents</button>
                             </div>
                             </form>
 
