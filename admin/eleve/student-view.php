@@ -1,5 +1,5 @@
 <?php
-require './dbcon.php';
+require '../../../suivi-eleves-prj/config/database.php';
 ?>
 <!doctype html>
 <html lang="en">

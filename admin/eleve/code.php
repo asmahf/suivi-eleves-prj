@@ -2,7 +2,7 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-require './dbcon.php';
+require '../../../suivi-eleves-prj/config/database.php';
 
 if (isset($_POST['delete_eleve'])) {
     $id_eleve = mysqli_real_escape_string($con, $_POST['delete_eleve']);
@@ -48,11 +48,11 @@ if (isset($_POST['update_eleve'])) {
     $query_run = mysqli_query($con, $query);
     if ($query_run) {
         $_SESSION['message'] = "L'eleve est mis à jour avec succès";
-        header("Location: student-create.php");
+        header("Location: index.php");
         exit(0);
     } else {
         $_SESSION['message'] = "les informations d'eleve ne sont pas mises à jour";
-        header("Location: student-create.php");
+        header("Location: index.php");
         exit(0);
     }
 }

@@ -63,7 +63,7 @@ require '../config/database.php';
                             <?php
 
                             if (isset($_GET['showlist'])) {
-                                // Récupérer l'enseignant et la classe sélectionnée depuis l'URL
+                                // Récupérer  la classe sélectionnée depuis l'URL
                                 $nom_classe = $_GET['classe'];
 
 

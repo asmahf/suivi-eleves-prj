@@ -1,5 +1,5 @@
 <?php
-require '../database.php';
+require '../../../suivi-eleves-prj/config/database.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -52,17 +52,14 @@ require '../database.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = "SELECT
-                                    utilisateur.*,
-                                    enseigner.nom_classe,
-                                    enseigner_matiere.nom_matiere
-                                FROM
-                                    utilisateur
-                                JOIN enseigner ON utilisateur.id_utilis = enseigner.id_enseignant
-                                JOIN classe ON enseigner.nom_classe = classe.nom_classe
-                                JOIN enseigner_matiere ON utilisateur.id_utilis = enseigner_matiere.id_enseignant
-                                WHERE
-                                    utilisateur.type_utilis = 'enseignant';";
+
+                                    $query = "SELECT utilisateur.*, GROUP_CONCAT(DISTINCT enseigner.nom_classe) AS classes, GROUP_CONCAT(DISTINCT enseigner_matiere.nom_matiere) AS matieres
+                                    FROM utilisateur
+                                    JOIN enseigner ON utilisateur.id_utilis = enseigner.id_enseignant
+                                    JOIN classe ON enseigner.nom_classe = classe.nom_classe
+                                    JOIN enseigner_matiere ON utilisateur.id_utilis = enseigner_matiere.id_enseignant
+                                    WHERE utilisateur.type_utilis = 'enseignant'
+                                    GROUP BY utilisateur.id_utilis;";
 
                                     $query_run = mysqli_query($con, $query);
 
@@ -78,13 +75,13 @@ require '../database.php';
                                                 <td><?= $teacher['n°_tlph']; ?></td>
                                                 <td><?= $teacher['email']; ?></td>
                                                 <td><?= $teacher['mot_de_passe']; ?></td>
-                                                <td><?= $teacher['nom_classe']; ?></td>
-                                                <td><?= $teacher['nom_matiere']; ?></td>
+                                                <td><?= str_replace(",", ", ", $teacher['classes']); ?></td>
+                                                <td><?= str_replace(",", ", ", $teacher['matieres']); ?></td>
                                                 <td>
-                                                    <a href="teacher-view.php?id=<?= $teacher['id_utilis']; ?>" class="btn btn-info btn-sm">Voir</a>
-                                                    <a href="teacher_edit.php?id=<?= $teacher['id_utilis']; ?>" class="btn btn-success btn-sm">Modifier</a>
+                                                    <a href="teacher-view.php?id=<?= $teacher['id_utilis']; ?>" class="btn btn-info btn-sm m-1">Voir</a>
+                                                    <a href="teacher_edit.php?id=<?= $teacher['id_utilis']; ?>" class="btn btn-success btn-sm m-1">Modifier</a>
                                                     <form action="code.php" method="POST" class="d-inline">
-                                                        <button type="submit" name="delete_teacher" value="<?= $teacher['id_utilis']; ?>" class="btn btn-danger btn-sm">Supprimer</button>
+                                                        <button type="submit" name="delete_teacher" value="<?= $teacher['id_utilis']; ?>" class="btn btn-danger btn-sm m-1">Supprimer</button>
                                                     </form>
                                                 </td>
                                             </tr>

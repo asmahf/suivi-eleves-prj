@@ -86,9 +86,35 @@ require '../database.php';
                                         </p>
                                     </div>
                                     <div class="mb-3">
-                                        <label>Matiere enseigne</label>
+                                        <label>Classes enseigne</label>
+                                        <?php
+                                        // Exécuter la requête SELECT pour récupérer la matière enseignée
+                                        $sql = "SELECT GROUP_CONCAT(DISTINCT enseigner.nom_classe) AS classes FROM enseigner WHERE id_enseignant = ?";
+                                        $stmt = mysqli_prepare($con, $sql);
+                                        mysqli_stmt_bind_param($stmt, 'i', $teacher['id_utilis']);
+                                        mysqli_stmt_execute($stmt);
+                                        mysqli_stmt_bind_result($stmt, $classesEnseignee);
+                                        mysqli_stmt_fetch($stmt);
+                                        mysqli_stmt_close($stmt);
+                                        ?>
                                         <p class="form-control">
-                                            <?= $teacher['matiere_enseigne']; ?>
+                                            <?= str_replace(",", ", ", $classesEnseignee) ?>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>matières enseigne</label>
+                                        <?php
+                                        // Exécuter la requête SELECT pour récupérer la matière enseignée
+                                        $sql = "SELECT GROUP_CONCAT(DISTINCT nom_matiere) AS matieres FROM enseigner_matiere WHERE id_enseignant = ?";
+                                        $stmt = mysqli_prepare($con, $sql);
+                                        mysqli_stmt_bind_param($stmt, 'i', $teacher['id_utilis']);
+                                        mysqli_stmt_execute($stmt);
+                                        mysqli_stmt_bind_result($stmt, $matieresEnseignee);
+                                        mysqli_stmt_fetch($stmt);
+                                        mysqli_stmt_close($stmt);
+                                        ?>
+                                        <p class="form-control">
+                                            <?= str_replace(",", ", ", $matieresEnseignee) ?>
                                         </p>
                                     </div>
 

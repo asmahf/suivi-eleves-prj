@@ -59,13 +59,13 @@
 
             <nav>
                 <ul class="sidenav__list">
-                    <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/acceuil.php">Acceuil</a></li>
+                    <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/acceuil.php"> Acceuil</a></li>
 
                     <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/eleve/index.php" class="sidebar-link">Eleves</a></li>
                     <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/teacher/teacher.php" class="sidebar-link">Enseignants</a></li>
                     <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/parents/index.php" class="sidebar-link">Parents</a></li>
                     <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/publication.php" class="sidebar-link">Publication</a></li>
-                    <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/emploi-temps.php" class="sidebar-link">Emploi du temps</a></li>
+                    <li class="sidenav__list-item"><a href="../../../suivi-eleves-prj/admin/ajouter-emploi-temps.php" class="sidebar-link">Emploi du temps</a></li>
 
                 </ul>
             </nav>

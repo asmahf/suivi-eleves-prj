@@ -11,7 +11,6 @@ require './config/database.php'; ?>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-    <script src='script.js'></script>
 </head>
 
 <body>
@@ -63,8 +62,15 @@ require './config/database.php'; ?>
                 <button type="submit" name="register">S'inscrire </button>
                 <p> Si vous avez un compte <a href="./login-parent.php">Se connecter</a></p>
             </form>
+            <div id="alert"></div>
         </div>
     </section>
+    <script>
+        function showAlert(alert) {
+            let alertElement = document.getElementById("alert");
+            alertElement.innerHTML = alert;
+        }
+    </script>
     <?php
     $username = "Asma";
     $password = "232300";
@@ -78,8 +84,8 @@ require './config/database.php'; ?>
         $checkEmail->execute();
 
         if ($checkEmail->rowCount() > 0) {
-            echo '<div class="alert alert-danger" role="alert">
-            Ce compte est déjà utilisé        </div>';
+            echo '<script>showAlert(`<div class="alert alert-danger" role="alert">
+            Ce compte est déjà utilisé</div>`);</script>';
         } else {
             $username = $_POST['username'];
             $firstname = $_POST['firstname'];
@@ -91,59 +97,77 @@ require './config/database.php'; ?>
             $profession = $_POST['profession'];
             $codes_enfant = $_POST['codes-enfant'];
 
-            // Insertion de l'utilisateur parent
-            $addUser = "INSERT INTO `utilisateur`( `nom_utilis`, `prenom_utilis`, `date_de_naissance`, `adresse_utilis`, `n°_tlph`, `email`, `mot_de_passe`,`profession`,`type_utilis` )
-         VALUES(?, ?, ?, ?, ?, ?, ?, ?, 'parent') ";
-            $addUserStmt = mysqli_prepare($con, $addUser);
-            mysqli_stmt_bind_param($addUserStmt, "ssssssss", $username, $firstname, $date_of_birth, $adress, $phone, $email, $password, $profession);
+            $eleve_array = array();
+
+            foreach ($codes_enfant as $code_enfant) {
+                // Vérification du code de l'enfant
+                $checkCodeQuery = "SELECT code_eleve ,id_eleve FROM `eleve` WHERE code_eleve = ?";
+                $checkCodeStmt = mysqli_prepare($con, $checkCodeQuery);
+                mysqli_stmt_bind_param($checkCodeStmt, "s", $code_enfant);
+                mysqli_stmt_execute($checkCodeStmt);
+                mysqli_stmt_store_result($checkCodeStmt);
 
 
-
-
-            if (mysqli_stmt_execute($addUserStmt)) {
-
-                $parentId = mysqli_insert_id($con);
-                foreach ($codes_enfant as $code_enfant) {
-                    // Vérification du code de l'enfant
-                    $checkCodeQuery = "SELECT code_eleve ,id_eleve FROM `eleve` WHERE code_eleve = ?";
-                    $checkCodeStmt = mysqli_prepare($con, $checkCodeQuery);
-                    mysqli_stmt_bind_param($checkCodeStmt, "s", $code_enfant);
-                    mysqli_stmt_execute($checkCodeStmt);
-                    mysqli_stmt_store_result($checkCodeStmt);
-
-
-                    if (mysqli_stmt_num_rows($checkCodeStmt) > 0) {
-                        // Récupération de l'ID de l'élève
-                        mysqli_stmt_bind_result($checkCodeStmt, $code_eleve, $id_eleve);
-                        while (mysqli_stmt_fetch($checkCodeStmt)) {
-                            // Modifier l'id_parent dans la table 'eleve' pour l'élève concerné
-                            $updateParentIdQuery = "UPDATE `eleve` SET `id_parent` = ? WHERE code_eleve = ?";
-                            $updateParentIdStmt = mysqli_prepare($con, $updateParentIdQuery);
-                            mysqli_stmt_bind_param($updateParentIdStmt, "is", $parentId, $code_enfant);
-                            mysqli_stmt_execute($updateParentIdStmt);
-
-                            // Modifier l'id_parent dans la table 'fiche_eleve' pour l'élève concerné
-                            $updateFicheQuery = "UPDATE `fiche_eleve` SET `id_parent` = ? WHERE id_eleve = ?";
-                            $updateFicheStmt = mysqli_prepare($con, $updateFicheQuery);
-                            mysqli_stmt_bind_param($updateFicheStmt, "ii", $parentId, $id_eleve);
-                            mysqli_stmt_execute($updateFicheStmt);
-                            $insertion_effectue = 1;
-                        }
-                    } else {
-                        echo '<div class="alert alert-danger" role="alert">
-                    Une erreur inattendue est apparue 
-            </div>';
+                if (mysqli_stmt_num_rows($checkCodeStmt) > 0) {
+                    // Récupération de l'ID de l'élève
+                    mysqli_stmt_bind_result($checkCodeStmt, $code_eleve, $id_eleve);
+                    if (mysqli_stmt_fetch($checkCodeStmt)) {
+                        //array 
+                        array_push($eleve_array, array("code_eleve" => $code_eleve, "id_eleve" => $id_eleve));
                     }
+                } else {
+                    echo '<script>showAlert(`<div class="alert alert-danger" role="alert">
+                    Veuillez vérifier vos codes enfants et réessayer
+                     </div>`);</script>';
+                    $eleve_array = array();
+                    die;
+                    // break;
                 }
-                if ($insertion_effectue) {
-                    echo '<div class="alert alert-success" role="alert">
-                    Votre compte a été créé avec succès             </div>';
-                }
-            } else {
-                // row not found, do stuff...
-                echo  '<div class="alert alert-danger" role="alert">
+            }
+
+            //if array empty 
+            if ($eleve_array) {
+                // Insertion de l'utilisateur parent
+                $addUser = "INSERT INTO `utilisateur`( `nom_utilis`, `prenom_utilis`, `date_de_naissance`, `adresse_utilis`, `n°_tlph`, `email`, `mot_de_passe`,`profession`,`type_utilis` )
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, 'parent') ";
+                $addUserStmt = mysqli_prepare($con, $addUser);
+                mysqli_stmt_bind_param($addUserStmt, "ssssssss", $username, $firstname, $date_of_birth, $adress, $phone, $email, $password, $profession);
+
+                if (mysqli_stmt_execute($addUserStmt)) {
+
+
+                    $parentId = mysqli_insert_id($con);
+
+                    //foreach array 
+                    foreach ($eleve_array as $eleve) {
+                        // Modifier l'id_parent dans la table 'eleve' pour l'élève concerné
+                        $updateParentIdQuery = "UPDATE `eleve` SET `id_parent` = ? WHERE code_eleve = ?";
+                        $updateParentIdStmt = mysqli_prepare($con, $updateParentIdQuery);
+                        mysqli_stmt_bind_param($updateParentIdStmt, "is", $parentId, $eleve["code_eleve"]);
+                        mysqli_stmt_execute($updateParentIdStmt);
+
+                        // Modifier l'id_parent dans la table 'fiche_eleve' pour l'élève concerné
+                        $updateFicheQuery = "UPDATE `fiche_eleve` SET `id_parent` = ? WHERE id_eleve = ?";
+                        $updateFicheStmt = mysqli_prepare($con, $updateFicheQuery);
+                        mysqli_stmt_bind_param($updateFicheStmt, "ii", $parentId, $eleve["id_eleve"]);
+
+
+                        if (!mysqli_stmt_execute($updateFicheStmt)) {
+                            //delete parent 
+                            // row not found, do stuff...
+                            echo '<script>showAlert(`<div class="alert alert-danger" role="alert">Une erreur s\'est produite Veuillez  réessayer </div>`);</script>';
+                            die;
+                        }
+                    } // end foreach array
+
+                    echo "<script>showAlert(`<div  class='alert alert-success' role='alert'>Votre compte est crée avec succès.</div>`);</script>";
+                } else {
+
+                    // row not found, do stuff...
+                    echo '<script>showAlert(`<div class="alert alert-danger" role="alert">
                 Veuillez vérifier vos informations et réessayer
-        </div>';
+        </div>`);</script>';
+                }
             }
         }
     }

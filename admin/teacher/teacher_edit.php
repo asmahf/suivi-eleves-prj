@@ -84,7 +84,6 @@ require '../database.php';
                                             <label>Classes enseignées</label>
                                             <select name="classe[]" class="js-example-basic-multiple form-control" multiple="multiple">
                                                 <?php
-                                                $con = new mysqli('localhost', 'Asma', '232300', 'suivieleve');
                                                 $id_enseignant = $_GET['id'];
                                                 // Préparer la requête SQL pour récupérer les classes avec leur ID d'enseignant associé, s'il y en a un
                                                 $sql = "SELECT c.nom_classe, e.id_enseignant FROM classe c LEFT JOIN enseigner e 
@@ -103,17 +102,43 @@ require '../database.php';
                                                         $selected_classes[] = $row['nom_classe'];
                                                     }
                                                 ?>
-                                                    <!-- Afficher une option pour chaque classe avec son nom comme valeur et son nom comme label -->
+
                                                     <option value="<?= $row['nom_classe']; ?>" <?php if (in_array($row['nom_classe'], $selected_classes)) echo 'selected'; ?>><?= $row['nom_classe']; ?></option>
                                                 <?php
                                                 }
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="mb-3">
-                                            <label>Matiere enseigne</label>
-                                            <input type="text" name="matiere" value="<?= $teacher['matiere_enseigne']; ?>" class="form-control">
+                                        <div class=" mb-3">
+                                            <label>Matieres enseignées</label>
+                                            <select name="matiere[]" class="js-example-basic-multiple form-control" multiple="multiple">
+                                                <?php
+                                                $id_enseignant = $_GET['id'];
+                                                // Préparer la requête SQL pour récupérer les classes avec leur ID d'enseignant associé, s'il y en a un
+                                                $sql = "SELECT m.nom_matiere, e.id_enseignant FROM matiere m LEFT JOIN enseigner_matiere e 
+                                            ON m.nom_matiere= e.nom_matiere AND e.id_enseignant = ?";
+                                                $stmt = mysqli_prepare($con, $sql);
+                                                mysqli_stmt_bind_param($stmt, 'i', $id_enseignant);
+                                                mysqli_stmt_execute($stmt);
+                                                // Récupérer les résultats de la requête SQL
+                                                $result = mysqli_stmt_get_result($stmt);
+                                                // Initialiser un tableau des classes sélectionnées pour l'enseignant
+                                                $selected_matieres = array();
+                                                // Parcourir tous les résultats de la requête SQL
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    // Si l'ID de l'enseignant correspond à celui récupéré depuis la variable GET, ajouter la classe au tableau des classes sélectionnées
+                                                    if ($row['id_enseignant'] == $id_enseignant) {
+                                                        $selected_matieres[] = $row['nom_matiere'];
+                                                    }
+                                                ?>
+
+                                                    <option value="<?= $row['nom_matiere']; ?>" <?php if (in_array($row['nom_matiere'], $selected_matieres)) echo 'selected'; ?>><?= $row['nom_matiere']; ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
+
                                         <div class="mb-3">
                                             <button type="submit" name="update_teacher" class="btn btn-primary">
                                                 Modifier

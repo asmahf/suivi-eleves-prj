@@ -1,5 +1,6 @@
 <?php
-require './dbcon.php';
+require '../../../suivi-eleves-prj/config/database.php';
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -61,13 +62,15 @@ require './dbcon.php';
                                             <input type="date" name="date_naiss_eleve" value="<?= $eleve['date_naiss_eleve']; ?>" class="form-control">
                                         </div>
                                         <div class="mb-3">
-                                            <label>Sexe</label>
-
-                                            <input type="radio" name="sexe" value="garçon" checked>
-                                            <label>Garçon</label>
-
-                                            <input type="radio" name="sexe" value="fille">
-                                            <label>Fille</label>
+                                            <label>Sexe </label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="sexe" value="garçon" checked required>
+                                                <label class="form-check-label">Garçon</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="sexe" value="fille" required>
+                                                <label class="form-check-label">Fille</label>
+                                            </div>
 
                                         </div><br />
                                         <div class="mb-3">
@@ -75,14 +78,20 @@ require './dbcon.php';
                                             <select name="nom_classe" value=<?= $eleve['nom_classe']; ?> class=" form-control">
 
                                                 <?php
-                                                $con = new mysqli('localhost', 'Asma', '232300', 'suivieleve');
-                                                $name_classe = " SELECT nom_classe FROM `classe`";
-                                                $name_classe_run = mysqli_query($con, $name_classe);
 
-                                                if (mysqli_num_rows($name_classe_run)) {
-                                                    foreach ($name_classe_run as $row) {
+                                                $name_classe_query = " SELECT nom_classe FROM `classe`";
+                                                $name_classe_query_run = mysqli_query($con, $name_classe_query);
+
+
+
+                                                if (mysqli_num_rows($name_classe_query_run)) {
+                                                    foreach ($name_classe_query_run as $row) {
+
                                                 ?>
-                                                        <option value=<?= $row['nom_classe']; ?>> <?= $row['nom_classe']; ?></option>
+
+
+                                                        <option value="<?= $row['nom_classe'];  ?>" <?php
+                                                                                                    if ($row['nom_classe'] == $eleve['nom_classe']) echo "selected"; ?>> <?= $row['nom_classe']; ?></option>
                                                     <?php
                                                     }
                                                 } else {

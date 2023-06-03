@@ -36,6 +36,8 @@ require '../config/database.php';
                         </div>
                         <div class="card-body">
                             <form method="GET" action="ajouter-note.php">
+
+
                                 <?php
                                 $con = new mysqli('localhost', 'Asma', '232300', 'suivieleve');
                                 $id_enseignant = $_SESSION['user']->id_utilis;
@@ -158,7 +160,7 @@ require '../config/database.php';
                     echo '<td>' . $row['nom_eleve'] . '</td>';
                     echo '<td>' . $row['prenom_eleve'] . '</td>';
                     echo '<td>' . $row['date_naiss_eleve'] . '</td>';
-                    echo '<td><input type="number" name="notes[' . $row['id_eleve'] . ']" min="0" max="10" step="0.5" value="' . (isset($row['note']) ? $row['note'] : '') . '"></td>';
+                    echo '<td><input type="number" name="notes[' . $row['id_eleve'] . ']" min="0" max="10" step="0.5" value=""></td>';
                     echo '<input type="hidden" name="id_eleve[' . $row['id_eleve'] . ']" value="' . $row['id_eleve'] . '">';
                     echo '<input type="hidden" name="nom_matiere" value="' . $nom_matiere . '">';
 

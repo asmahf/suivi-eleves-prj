@@ -31,15 +31,15 @@ if (isset($_POST['update_teacher'])) {
     $phone = mysqli_real_escape_string($con, $_POST['num-telephone']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
-    $classes_selectionnees = $_POST['classe'];
-    $matiere = mysqli_real_escape_string($con, $_POST['matiere']);
+    $selected_classes = $_POST['classe'];
+    $selected_matieres =  $_POST['matiere'];
 
     // Commencer une transaction
     mysqli_begin_transaction($con);
 
     // Mettre à jour les informations de l'enseignant
     $query_update_teacher = "UPDATE `utilisateur` SET `nom_utilis`='$username', `prenom_utilis`='$firstname', `date_de_naissance`='$date_of_birth', 
-    `adresse_utilis`='$adress', `n°_tlph`='$phone' , `email`='$email', `mot_de_passe`='$password', `matiere_enseigne`='$matiere' WHERE id_utilis='$teacher_id' ";
+    `adresse_utilis`='$adress', `n°_tlph`='$phone' , `email`='$email', `mot_de_passe`='$password' WHERE id_utilis='$teacher_id' ";
     $query_run_update_teacher = mysqli_query($con, $query_update_teacher);
 
     // Supprimer toutes les entrées pour cet enseignant dans la table enseigner
@@ -47,13 +47,20 @@ if (isset($_POST['update_teacher'])) {
     $query_run_delete_enseigner = mysqli_query($con, $query_delete_enseigner);
 
     // Insérer les nouvelles entrées pour cet enseignant dans la table enseigner
-    foreach ($classes_selectionnees as $classe) {
+    foreach ($selected_classes as $classe) {
         $query_insert_enseigner = "INSERT INTO enseigner (id_enseignant, nom_classe) VALUES ('$teacher_id', '$classe')";
         $query_run_insert_enseigner = mysqli_query($con, $query_insert_enseigner);
     }
+    $query_delete_enseigner_matiere = "DELETE FROM enseigner_matiere WHERE id_enseignant='$teacher_id'";
+    $query_run_delete_enseigner_matiere = mysqli_query($con, $query_delete_enseigner_matiere);
+
+    foreach ($selected_matieres as $matiere) {
+        $query_insert_enseigner_matiere = "INSERT INTO enseigner_matiere (id_enseignant, nom_matiere) VALUES ('$teacher_id', '$matiere')";
+        $query_run_insert_enseigner_matiere = mysqli_query($con, $query_insert_enseigner_matiere);
+    }
 
     // Valider la transaction
-    if ($query_run_update_teacher && $query_run_delete_enseigner && $query_run_insert_enseigner) {
+    if ($query_run_update_teacher && $query_run_delete_enseigner && $query_run_insert_enseigner && $query_run_insert_enseigner_matiere) {
         mysqli_commit($con);
         $_SESSION['message'] = "L'enseignant est mis à jour avec succès";
         header("Location: teacher.php");
