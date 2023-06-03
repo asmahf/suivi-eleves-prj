@@ -19,7 +19,7 @@
             session_unset(); // Réinitialise toutes les variables de session
             session_destroy(); // Détruit la session actuelle
             // Redirigez l'utilisateur vers la page de connexion ou une autre page appropriée
-            header("Location: ../login-teacher.php");
+            header("Location: http://localhost/suivi-eleves-prj/login-teacher.php");
             exit; // Assurez-vous de quitter le script après la redirection
         }
         ?> -->
