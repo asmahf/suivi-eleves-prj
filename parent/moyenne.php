@@ -72,7 +72,7 @@ require '../config/database.php';
             $hr = 0;
 
 
-            // Calculer et insérer la moyenne dans la table "note"
+            // Calculer et insérer la moyenne dans la table "eleve"
             $sql = "UPDATE eleve SET moyenne = (SELECT AVG(valeur_note) AS moyenne FROM note WHERE id_fiche = ?) WHERE id_parent = ?";
             $stmt = mysqli_prepare($con, $sql);
             mysqli_stmt_bind_param($stmt, 'ii', $id_fiche, $id_parent);

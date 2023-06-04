@@ -20,7 +20,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === 'true') {
     session_unset(); // Réinitialise toutes les variables de session
     session_destroy(); // Détruit la session actuelle
     // Redirigez l'utilisateur vers la page de connexion ou une autre page appropriée
-    header("Location:.http://localhost/suivi-eleves-prj/login-parent.php");
+    header("Location:http://localhost/suivi-eleves-prj/login-parent.php");
     exit; // Assurez-vous de quitter le script après la redirection
 }
 ?>
