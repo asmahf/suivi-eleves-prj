@@ -21,40 +21,40 @@ require './config/database.php'; ?>
                 <div id="logo"></div>
                 <h1>Enregistrez vous</h1>
                 <div>
-                    <label for="username">Nom</label>
+                    <label for="username">Nom*</label>
                     <input id="username" type="text" name="username" required />
                 </div>
                 <div>
-                    <label for="firstname">Prenom</label>
+                    <label for="firstname">Prenom*</label>
                     <input id="firstname" type="text" name="firstname" required />
                 </div>
                 <div>
-                    <label for="date_of_birth">Date de naissance</label>
+                    <label for="date_of_birth">Date de naissance*</label>
                     <input id="date_of_birth" type="date" name="date_of_birth" required />
                 </div>
                 <div>
-                    <label for="adresse">Adresse</label>
+                    <label for="adresse">Adresse*</label>
                     <input id="adresse" type="text" name="adresse" required />
                 </div>
                 <div>
-                    <label for="num-telephone">Numero telephone</label>
+                    <label for="num-telephone">Numero telephone*</label>
                     <input id="phone" type="tel" name="num-telephone" required />
                 </div>
                 <div>
-                    <label for="email">Email</label>
+                    <label for="email">Email*</label>
                     <input id="email" type="email" name="email" required />
                 </div>
                 <div>
-                    <label for="password">Mot de passe</label>
+                    <label for="password">Mot de passe*</label>
                     <input id="password" type="password" name="password" required />
                 </div>
                 <div>
-                    <label for="profession">Proffesion</label>
+                    <label for="profession">Proffesion*</label>
                     <input id="profession" type="text" name="profession" required />
                 </div>
                 <div id="code-enfant-list">
                     <div>
-                        <label for="code-enfant">Code enfant</label>
+                        <label for="code-enfant">Code enfant*</label>
                         <input id="code-enfant" type="text" name="codes-enfant[]" required multiple />
                     </div>
                 </div>

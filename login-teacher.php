@@ -20,11 +20,11 @@
                 </div>
                 <h1>Connectez vous</h1>
                 <div class="name">
-                    <label for="text">Nom d'utilisateur*</label>
+                    <label for="text">Nom d'utilisateur</label>
                     <input id="name" type="text" name="name" placeholder="Nom.prenom" required>
                 </div>
                 <div class="password">
-                    <label for="password">Mot de passe*</label>
+                    <label for="password">Mot de passe</label>
                     <input id="password" type="password" name="password" required>
                 </div>
                 <button type="submit" name="login"> Se connecter </button>
